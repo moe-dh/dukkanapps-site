@@ -1,0 +1,245 @@
+# لوحة تحكم دكّان آبس — Pages CMS (https://app.pagescms.org)
+# كل نص في الصفحة موجود هنا. احفظ، والموقع يتحدث تلقائياً خلال دقيقة.
+media:
+  input: img
+  output: /img
+
+content:
+  - name: site
+    label: "صفحة دكّان آبس"
+    type: file
+    path: content/site.json
+    format: json
+    fields:
+
+      # ───────── الإعدادات العامة ─────────
+      - name: seo
+        label: "🔎 محركات البحث والمشاركة"
+        type: object
+        fields:
+          - { name: title, label: "عنوان الصفحة (يظهر في تبويب المتصفح وجوجل)", type: string }
+          - { name: description, label: "وصف الصفحة في جوجل", type: text }
+          - { name: share_image, label: "صورة المشاركة (واتساب/تويتر)", type: image }
+
+      - name: theme
+        label: "🎨 الألوان والحركات"
+        type: object
+        fields:
+          - { name: accent, label: "اللون الرئيسي (مثال #f2b33d)", type: string }
+          - { name: accent_text, label: "لون النص فوق الأزرار الرئيسية", type: string }
+          - { name: secondary, label: "اللون الثانوي (النقطة الخضراء والتدرجات)", type: string }
+          - { name: background, label: "لون الخلفية", type: string }
+          - { name: card, label: "لون البطاقات", type: string }
+          - { name: text, label: "لون النص", type: string }
+          - { name: muted, label: "لون النص الثانوي", type: string }
+          - name: intro
+            label: "الافتتاحية السينمائية"
+            type: select
+            options:
+              values:
+                - { value: once, label: "مرة وحدة لكل زيارة" }
+                - { value: always, label: "كل مرة تنفتح الصفحة" }
+                - { value: "off", label: "إيقاف" }
+          - { name: motion, label: "تشغيل الحركات والمؤثرات", type: boolean }
+          - { name: floating_whatsapp, label: "زر الواتساب العائم", type: boolean }
+
+      - name: contact
+        label: "📞 بيانات التواصل"
+        type: object
+        fields:
+          - { name: whatsapp, label: "رقم الواتساب (مثال 0591564886 أو 966591564886)", type: string }
+          - { name: whatsapp_display, label: "الرقم كما يظهر للزائر", type: string }
+          - { name: email, label: "الإيميل", type: string }
+          - { name: default_message, label: "رسالة الواتساب الافتراضية", type: string }
+
+      - name: intro
+        label: "🎬 نص الافتتاحية"
+        type: object
+        fields:
+          - { name: name_first, label: "الكلمة الأولى", type: string }
+          - { name: name_second, label: "الكلمة الثانية (باللون الرئيسي)", type: string }
+
+      # ───────── الهيدر ─────────
+      - name: header
+        label: "⬆️ الهيدر (الشريط العلوي)"
+        type: object
+        fields:
+          - { name: brand, label: "اسم البراند", type: string }
+          - name: links
+            label: "روابط القائمة"
+            type: object
+            list: true
+            fields:
+              - { name: label, label: "النص", type: string }
+              - { name: href, label: "الرابط (مثال #work)", type: string }
+          - { name: cta_label, label: "نص الزر", type: string }
+          - { name: cta_message, label: "رسالة الواتساب للزر", type: string }
+
+      # ───────── أول الصفحة ─────────
+      - name: hero
+        label: "🏁 أول الصفحة"
+        type: object
+        fields:
+          - { name: status, label: "الشارة الصغيرة فوق العنوان", type: string }
+          - { name: title_before, label: "العنوان: الجزء الأول", type: string }
+          - { name: title_highlight, label: "العنوان: الجزء الملوّن", type: string }
+          - { name: title_after, label: "العنوان: الجزء الأخير", type: string }
+          - { name: lead, label: "الوصف تحت العنوان", type: text }
+          - { name: primary_label, label: "الزر الرئيسي: النص", type: string }
+          - { name: primary_message, label: "الزر الرئيسي: رسالة الواتساب", type: string }
+          - { name: secondary_label, label: "الزر الثاني: النص", type: string }
+          - { name: secondary_href, label: "الزر الثاني: الرابط", type: string }
+          - name: facts
+            label: "الأرقام تحت الأزرار"
+            type: object
+            list: true
+            fields:
+              - { name: value, label: "الرقم/العنوان", type: string }
+              - { name: label, label: "الوصف", type: string }
+          - { name: mockup_back_image, label: "الصورة الخلفية", type: image }
+          - { name: mockup_back_label, label: "نص شريط الصورة الخلفية", type: string }
+          - { name: mockup_front_image, label: "الصورة الأمامية", type: image }
+          - { name: mockup_front_label, label: "نص شريط الصورة الأمامية", type: string }
+          - { name: badge_one, label: "الشارة العائمة ١", type: string }
+          - { name: badge_two, label: "الشارة العائمة ٢", type: string }
+
+      # ───────── الشريط المتحرك ─────────
+      - name: marquee
+        label: "🎞️ الشريط المتحرك"
+        type: object
+        fields:
+          - { name: show, label: "إظهار الشريط", type: boolean }
+          - name: row_one
+            label: "الصف الأول"
+            type: object
+            list: true
+            fields:
+              - { name: text, label: "النص", type: string }
+              - { name: color, label: "لون النقطة", type: string }
+          - name: row_two
+            label: "الصف الثاني"
+            type: object
+            list: true
+            fields:
+              - { name: text, label: "النص", type: string }
+              - { name: color, label: "لون النقطة", type: string }
+
+      # ───────── الخدمات ─────────
+      - name: services
+        label: "🧩 الخدمات"
+        type: object
+        fields:
+          - { name: kicker, label: "الكلمة الصغيرة فوق العنوان", type: string }
+          - { name: title, label: "العنوان", type: string }
+          - { name: subtitle, label: "الوصف", type: text }
+          - name: items
+            label: "البطاقات"
+            type: object
+            list: true
+            fields:
+              - name: icon
+                label: "الأيقونة"
+                type: select
+                options:
+                  values:
+                    - { value: store, label: "متجر" }
+                    - { value: chart, label: "تقارير" }
+                    - { value: monitor, label: "شاشة/موقع" }
+                    - { value: phone, label: "جوال" }
+                    - { value: code, label: "كود" }
+                    - { value: palette, label: "تصميم/ثيم" }
+                    - { value: cart, label: "سلة شراء" }
+                    - { value: rocket, label: "صاروخ" }
+                    - { value: bolt, label: "سرعة" }
+                    - { value: shield, label: "حماية" }
+                    - { value: barcode, label: "باركود" }
+                    - { value: ruler, label: "مسطرة/مقاسات" }
+              - { name: wide, label: "بطاقة عريضة", type: boolean }
+              - { name: title, label: "العنوان", type: string }
+              - { name: text, label: "الوصف", type: text }
+              - { name: link_label, label: "نص الرابط", type: string }
+              - { name: message, label: "رسالة الواتساب عند الضغط", type: string }
+
+      # ───────── أعمالنا ─────────
+      - name: work
+        label: "💼 أعمالنا"
+        type: object
+        fields:
+          - { name: kicker, label: "الكلمة الصغيرة فوق العنوان", type: string }
+          - { name: title, label: "العنوان", type: string }
+          - { name: subtitle, label: "الوصف", type: text }
+          - name: cases
+            label: "المشاريع"
+            type: object
+            list: true
+            fields:
+              - { name: title, label: "اسم المشروع", type: string }
+              - name: tags
+                label: "الوسوم"
+                type: object
+                list: true
+                fields:
+                  - { name: text, label: "الوسم", type: string }
+              - { name: text, label: "الوصف", type: text }
+              - name: points
+                label: "النقاط"
+                type: object
+                list: true
+                fields:
+                  - { name: text, label: "النقطة", type: string }
+              - { name: image_one, label: "الصورة الأولى", type: image }
+              - { name: image_two, label: "الصورة الثانية", type: image }
+              - { name: link_label, label: "نص زر (اختياري)", type: string }
+              - { name: link_url, label: "رابط الزر (اختياري)", type: string }
+
+      # ───────── طريقة الشغل ─────────
+      - name: process
+        label: "🪜 طريقة الشغل"
+        type: object
+        fields:
+          - { name: kicker, label: "الكلمة الصغيرة فوق العنوان", type: string }
+          - { name: title, label: "العنوان", type: string }
+          - { name: subtitle, label: "الوصف", type: text }
+          - name: steps
+            label: "الخطوات"
+            type: object
+            list: true
+            fields:
+              - { name: title, label: "العنوان", type: string }
+              - { name: text, label: "الوصف", type: text }
+
+      # ───────── الأسئلة ─────────
+      - name: faq
+        label: "❓ الأسئلة الشائعة"
+        type: object
+        fields:
+          - { name: kicker, label: "الكلمة الصغيرة فوق العنوان", type: string }
+          - { name: title, label: "العنوان", type: string }
+          - { name: subtitle, label: "الوصف", type: text }
+          - name: items
+            label: "الأسئلة"
+            type: object
+            list: true
+            fields:
+              - { name: question, label: "السؤال", type: string }
+              - { name: answer, label: "الجواب", type: text }
+
+      # ───────── الدعوة الأخيرة ─────────
+      - name: final
+        label: "📣 قسم التواصل الأخير"
+        type: object
+        fields:
+          - { name: title, label: "العنوان", type: string }
+          - { name: text, label: "الوصف", type: text }
+          - { name: whatsapp_label, label: "نص زر الواتساب", type: string }
+          - { name: show_email, label: "إظهار زر الإيميل", type: boolean }
+          - { name: note, label: "الملاحظة الصغيرة", type: string }
+
+      # ───────── الفوتر ─────────
+      - name: footer
+        label: "⬇️ الفوتر"
+        type: object
+        fields:
+          - { name: copyright, label: "نص الحقوق (بعد © والسنة)", type: string }
+          - { name: whatsapp_label, label: "نص رابط الواتساب", type: string }
+          - { name: email_label, label: "نص رابط الإيميل", type: string }
