@@ -151,8 +151,6 @@ content:
                     - { value: soon, label: "قريباً (تحت المراجعة)" }
               - { name: badge, label: "شارة صغيرة (مثال: جديد) اختياري", type: string }
               - { name: tagline, label: "وصف بسطر أو سطرين", type: text }
-              - { name: price, label: "السعر (مثال: 50 ر.س / شهر)", type: string }
-              - { name: offer, label: "العرض (مثال: تجربة مجانية 7 أيام)", type: string }
               - { name: store_url, label: "رابط التطبيق في سوق زد", type: string }
               - { name: video_url, label: "رابط الفيديو", type: string }
 
