@@ -78,7 +78,7 @@ const appCard = (a) => {
         <div class="app-actions">
           ${primary}
           ${a.video_url ? `<a class="btn btn-line" href="${esc(a.video_url)}" target="_blank" rel="noopener">${PLAY}<span>الفيديو</span></a>` : ''}
-          ${s && list(W.cases).some((c) => slug(c.slug) === s) ? `<a class="app-more" href="#case-${s}">التفاصيل</a>` : ''}
+          ${W.show !== false && s && list(W.cases).some((c) => slug(c.slug) === s) ? `<a class="app-more" href="#case-${s}">التفاصيل</a>` : ''}
         </div>
       </article>`;
 };
@@ -139,7 +139,7 @@ ${introHtml}
     <a href="#" class="logo" aria-label="${esc(H.brand)}">${LOGO(accent, safeColor(T.background, '#0a0c0b'))}${esc(H.brand)}</a>
     <div class="links" id="navLinks">${list(H.links).map((l) => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('')}</div>
     <div class="nav-end">
-    ${H.cta_label ? `<a class="btn btn-primary" href="${esc(wa(H.cta_message))}" target="_blank" rel="noopener">${CAL}<span>${esc(H.cta_label)}</span></a>` : ''}
+    ${H.cta_label ? `<a class="btn btn-primary" href="${esc(H.cta_href || wa(H.cta_message))}"${H.cta_href ? '' : ' target="_blank" rel="noopener"'}>${CAL}<span>${esc(H.cta_label)}</span></a>` : ''}
     ${list(H.links).length ? `<button class="menu-btn" id="menuBtn" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="navLinks"><i></i><i></i><i></i></button>` : ''}
     </div>
   </nav>
@@ -196,7 +196,7 @@ ${APPS.length ? `<section id="apps" class="apps-sec">
   </div>
 </section>` : ''}
 
-<section id="work" class="work">
+${W.show === false || !list(W.cases).length ? '' : `<section id="work" class="work">
   <div class="wrap">${secHead(W)}
     ${list(W.cases).map((c, i) => `<article class="case${i % 2 ? ' flip' : ''} rv"${slug(c.slug) ? ` id="case-${slug(c.slug)}"` : ''}>
       <div>
@@ -212,9 +212,9 @@ ${APPS.length ? `<section id="apps" class="apps-sec">
       </div>
     </article>`).join('\n    ')}
   </div>
-</section>
+</section>`}
 
-${list(WY.items).length ? `<section id="why">
+${WY.show !== false && list(WY.items).length ? `<section id="why">
   <div class="wrap">${secHead(WY)}
     <div class="why">
       ${list(WY.items).map((it) => `<div class="why-item rv"><div class="ico">${icon(it.icon)}</div><div><h3>${esc(it.title)}</h3><p>${esc(it.text)}</p></div></div>`).join('\n      ')}
@@ -222,7 +222,7 @@ ${list(WY.items).length ? `<section id="why">
   </div>
 </section>` : ''}
 
-${list(MO.items).length ? `<section id="models" class="models-sec">
+${MO.show !== false && list(MO.items).length ? `<section id="models" class="models-sec">
   <div class="wrap">${secHead(MO)}
     <div class="models">
       ${list(MO.items).map((m) => `<div class="model rv">
@@ -257,11 +257,12 @@ ${list(BR.questions).length ? `<section id="start" class="brief-sec">
       </fieldset>`).join('\n      ')}
       <div class="brief-fields">
         <label class="field field-wide"><span>${esc(BR.details_label)}</span><textarea name="details" rows="3" maxlength="800" placeholder="${esc(BR.details_placeholder)}"></textarea></label>
-        <label class="field"><span>${esc(BR.name_label)}</span><input name="name" type="text" maxlength="60" autocomplete="name"></label>
+        ${BR.name_label ? `<label class="field"><span>${esc(BR.name_label)}</span><input name="name" type="text" maxlength="60" autocomplete="name"></label>` : ''}
       </div>
       <div class="brief-foot">
         <button class="btn btn-primary" type="submit">${WA_ICON} ${esc(BR.button || 'أرسل واتساب')}</button>
         ${BR.hint ? `<small>${esc(BR.hint)}</small>` : ''}
+        <small>أو كلمنا مباشرة: <a href="${esc(wa(CT.default_message))}" target="_blank" rel="noopener" dir="ltr">${esc(CT.whatsapp_display)}</a>${CT.email ? ` · <a href="mailto:${esc(CT.email)}">${esc(CT.email)}</a>` : ''}</small>
       </div>
     </form>
   </div>
@@ -280,7 +281,7 @@ ${list(BR.questions).length ? `<section id="start" class="brief-sec">
   </div>
 </section>
 
-<section class="final-wrap">
+${FI.show === false ? '' : `<section class="final-wrap">
   <div class="wrap">
     <div class="final rv">
       <h2>${esc(FI.title)}</h2>
@@ -292,7 +293,7 @@ ${list(BR.questions).length ? `<section id="start" class="brief-sec">
       ${FI.note ? `<small>${esc(FI.note)}</small>` : ''}
     </div>
   </div>
-</section>
+</section>`}
 </main>
 
 <footer>
