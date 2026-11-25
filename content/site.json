@@ -12,7 +12,7 @@
     "card": "#131716",
     "text": "#eef1ee",
     "muted": "#9aa49f",
-    "intro": "off",
+    "intro": "once",
     "motion": true,
     "floating_whatsapp": true
   },
@@ -80,7 +80,10 @@
     "mockup_back_label": "sizeguide.dukkanapps.com",
     "badge_one": "اقتراح المقاس للعميل",
     "badge_two": "Code 128 · EAN-13 · QR",
-    "primary_href": "#start"
+    "primary_href": "#start",
+    "visual": "apps",
+    "shelf_title": "منتجاتنا شغّالة في سوق زد",
+    "shelf_cta": "مشروعك الجاي"
   },
   "marquee": {
     "show": true,

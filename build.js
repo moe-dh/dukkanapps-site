@@ -158,14 +158,20 @@ ${introHtml}
       </div>
       ${list(HE.facts).length ? `<div class="facts">${list(HE.facts).map((f) => `<div><b>${esc(fill(f.value))}</b><span>${esc(fill(f.label))}</span></div>`).join('')}</div>` : ''}
     </div>
-    <div class="stack rv" aria-hidden="true" id="stack">
+    ${HE.visual === 'apps' && APPS.length ? `<div class="shelf rv">
+      <div class="shelf-head"><span class="dot"></span>${esc(HE.shelf_title || '')}</div>
+      <div class="shelf-grid">
+        ${APPS.map((a) => `<a class="tile" href="#apps">${a.icon ? `<img src="${img(a.icon)}" alt="" width="56" height="56">` : `<span class="tile-ico">${icon('store')}</span>`}<b>${esc(a.name)}</b><small class="${a.status === 'soon' ? 'soon' : 'live'}">${a.status === 'soon' ? 'قريباً' : 'متاح الحين'}</small></a>`).join('')}
+        <a class="tile tile-cta" href="#start"><span class="plus">+</span><b>${esc(HE.shelf_cta || 'مشروعك')}</b><small>نبنيه لك</small></a>
+      </div>
+    </div>` : `<div class="stack rv" aria-hidden="true" id="stack">
      <div class="stack-inner" id="stackInner">
       ${HE.mockup_back_image ? `<div class="shot s1"><div class="bar"><i></i><i></i><i></i><span class="mono">${esc(HE.mockup_back_label)}</span></div><img src="${img(HE.mockup_back_image)}" alt=""></div>` : ''}
       ${HE.mockup_front_image ? `<div class="shot s2"><div class="bar"><i></i><i></i><i></i><span class="mono">${esc(HE.mockup_front_label)}</span></div><img src="${img(HE.mockup_front_image)}" alt=""></div>` : ''}
       ${HE.badge_one ? `<div class="tag-float tf1"><svg viewBox="0 0 24 24" fill="none" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6L9 17l-5-5"/></svg>${esc(HE.badge_one)}</div>` : ''}
       ${HE.badge_two ? `<div class="tag-float tf2">${icon('barcode')}${esc(HE.badge_two)}</div>` : ''}
      </div>
-    </div>
+    </div>`}
   </div>
 </section>
 

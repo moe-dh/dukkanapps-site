@@ -437,3 +437,43 @@ section{padding:84px 0}
   details{padding:16px 0}
   summary{font-size:15.5px}
 }
+
+/* ============ HERO SHELF + FACTS ============ */
+.shelf{position:relative;padding:22px;border-radius:26px;border:1px solid var(--line-2);background:linear-gradient(160deg,rgba(255,255,255,.05),rgba(255,255,255,.01)),rgba(15,18,17,.7);backdrop-filter:blur(10px);box-shadow:0 40px 90px -30px rgba(0,0,0,.8),0 0 0 6px rgba(255,255,255,.02)}
+.shelf::before{content:"";position:absolute;inset:-40px;z-index:-1;background:radial-gradient(closest-side,rgba(242,179,61,.18),transparent);pointer-events:none}
+.shelf-head{display:flex;align-items:center;gap:10px;font-size:14px;color:var(--muted);margin-bottom:16px}
+.shelf-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.tile{display:flex;flex-direction:column;align-items:center;text-align:center;gap:8px;padding:18px 10px 16px;border-radius:18px;background:var(--card);border:1px solid var(--line);transition:border-color .2s,background .2s}
+.tile:hover{border-color:rgba(242,179,61,.45);background:var(--card-2)}
+.tile img{width:58px;height:58px;border-radius:16px;background:#fff;object-fit:cover;box-shadow:0 10px 24px -10px rgba(0,0,0,.7)}
+.tile b{font-size:15px;font-weight:700;line-height:1.3}
+.tile small{font-size:12px;display:inline-flex;align-items:center;gap:6px}
+.tile small::before{content:"";width:6px;height:6px;border-radius:50%}
+.tile small.live{color:var(--green)}.tile small.live::before{background:var(--green)}
+.tile small.soon{color:var(--amber)}.tile small.soon::before{background:var(--amber)}
+.tile-cta{border-style:dashed;border-color:rgba(242,179,61,.45);background:rgba(242,179,61,.05)}
+.tile-cta .plus{width:58px;height:58px;border-radius:16px;display:grid;place-items:center;font-size:30px;font-weight:300;color:var(--amber-ink);background:var(--amber)}
+.tile-cta small{color:var(--muted)}.tile-cta small::before{display:none}
+.shelf .tile:nth-child(odd){animation:bob 6s ease-in-out infinite}
+.shelf .tile:nth-child(even){animation:bob 6s -3s ease-in-out infinite}
+
+/* facts: tidy 3-up strip */
+.facts{display:grid;grid-template-columns:repeat(3,1fr);gap:0}
+.facts > div{padding-inline:16px;border-inline-start:1px solid var(--line)}
+.facts > div:first-child{padding-inline-start:0;border-inline-start:0}
+.facts b{font-size:20px;line-height:1.4}
+.facts span{display:block;line-height:1.5;margin-top:4px}
+@media (max-width:600px){
+  .facts > div{padding-inline:10px}
+  .facts b{font-size:15px}
+  .facts span{font-size:12px}
+  .shelf{padding:14px;border-radius:22px}
+  .shelf-head{font-size:13px;margin-bottom:12px}
+  .shelf-grid{gap:8px}
+  .tile{padding:12px 6px;border-radius:14px;gap:6px}
+  .tile img,.tile-cta .plus{width:44px;height:44px;border-radius:12px}
+  .tile-cta .plus{font-size:24px}
+  .tile b{font-size:13px}
+  .tile small{font-size:11px}
+}
+@media (prefers-reduced-motion:reduce){.shelf .tile{animation:none!important}}
