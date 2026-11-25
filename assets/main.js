@@ -50,7 +50,7 @@ function endIntro(){
   setTimeout(function(){intro.classList.add('gone')},1200);
   try{sessionStorage.setItem('dk_intro','1')}catch(e){}
 }
-if(reduce||seen){intro.classList.add('gone');body.classList.remove('locked');reveal()}
+if(!intro||reduce||seen){if(intro)intro.classList.add('gone');body.classList.remove('locked');reveal()}
 else{
   var t0=performance.now(),D=1900;
   (function tick(t){var p=Math.min(1,(t-t0)/D);var e=1-Math.pow(1-p,3);pct.textContent=String(Math.round(e*100)).padStart(2,'0')+'%';if(p<1)requestAnimationFrame(tick);else setTimeout(endIntro,180)})(t0);
@@ -125,7 +125,7 @@ document.querySelectorAll('.btn').forEach(function(b){
       var v=[].slice.call(fs.querySelectorAll('input:checked')).map(function(i){return i.value});
       if(v.length)lines.push('• '+fs.getAttribute('data-label')+' '+v.join('، '));
     });
-    var d=f.elements.details.value.trim(),n=f.elements.name.value.trim();
+    var d=f.elements.details.value.trim(),n=f.elements.name?f.elements.name.value.trim():'';
     if(d)lines.push('','التفاصيل: '+d);
     if(n)lines.push('','الاسم: '+n);
     window.open('https://wa.me/'+f.getAttribute('data-wa')+'?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener');
