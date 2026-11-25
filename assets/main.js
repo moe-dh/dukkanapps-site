@@ -92,11 +92,12 @@ document.querySelectorAll('.step,.final,details').forEach(function(el){
 
 /* ---- hero store mockup 3D ---- */
 var stack=document.getElementById('stack'),inner=document.getElementById('stackInner');
-document.querySelector('.hero').addEventListener('mousemove',function(e){
+if(stack&&inner)document.querySelector('.hero').addEventListener('mousemove',function(e){
   var r=stack.getBoundingClientRect(),x=(e.clientX-(r.left+r.width/2))/window.innerWidth,y=(e.clientY-(r.top+r.height/2))/window.innerHeight;
   inner.style.transform='rotateY('+(x*18)+'deg) rotateX('+(-y*14)+'deg)';
 });
-document.querySelector('.hero').addEventListener('mouseleave',function(){inner.style.transform=''});
+if(inner)document.querySelector('.hero').addEventListener('mouseleave',function(){inner.style.transform=''});
+document.querySelectorAll('.tile').forEach(function(el){tilt(el,10)});
 
 /* ---- magnetic buttons ---- */
 document.querySelectorAll('.btn').forEach(function(b){
