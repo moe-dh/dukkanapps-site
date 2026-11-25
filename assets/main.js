@@ -104,3 +104,13 @@ document.querySelectorAll('.btn').forEach(function(b){
   b.addEventListener('mouseleave',function(){b.style.transform=''});
 });
 })();
+
+/* ---- mobile menu ---- */
+(function(){
+  var btn=document.getElementById('menuBtn');if(!btn)return;
+  var shell=btn.closest('.nav-shell');
+  function set(open){shell.classList.toggle('open',open);btn.setAttribute('aria-expanded',open?'true':'false')}
+  btn.addEventListener('click',function(){set(!shell.classList.contains('open'))});
+  document.querySelectorAll('#navLinks a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
+})();

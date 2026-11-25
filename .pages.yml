@@ -124,6 +124,36 @@ content:
               - { name: text, label: "النص", type: string }
               - { name: color, label: "لون النقطة", type: string }
 
+      # ───────── تطبيقاتنا ─────────
+      - name: apps
+        label: "📱 تطبيقاتنا في سوق زد"
+        type: object
+        fields:
+          - { name: kicker, label: "الكلمة الصغيرة فوق العنوان", type: string }
+          - { name: title, label: "العنوان", type: string }
+          - { name: subtitle, label: "الوصف", type: text }
+          - { name: note, label: "الملاحظة تحت البطاقات", type: string }
+          - name: items
+            label: "التطبيقات (عددها يطلع تلقائياً مكان {{apps}} في أول الصفحة)"
+            type: object
+            list: true
+            fields:
+              - { name: name, label: "اسم التطبيق", type: string }
+              - { name: slug, label: "معرّف بالإنجليزي (نفس معرّف المشروع في «أعمالنا» عشان يشتغل زر التفاصيل)", type: string }
+              - { name: icon, label: "الأيقونة", type: image }
+              - { name: category, label: "التصنيف", type: string }
+              - name: status
+                label: "الحالة"
+                type: select
+                options:
+                  values:
+                    - { value: live, label: "متاح في سوق زد" }
+                    - { value: soon, label: "قريباً (تحت المراجعة)" }
+              - { name: badge, label: "شارة صغيرة (مثال: جديد) اختياري", type: string }
+              - { name: tagline, label: "وصف بسطر أو سطرين", type: text }
+              - { name: store_url, label: "رابط التطبيق في سوق زد", type: string }
+              - { name: video_url, label: "رابط الفيديو", type: string }
+
       # ───────── الخدمات ─────────
       - name: services
         label: "🧩 الخدمات"
@@ -174,6 +204,7 @@ content:
             list: true
             fields:
               - { name: title, label: "اسم المشروع", type: string }
+              - { name: slug, label: "معرّف بالإنجليزي (للربط من بطاقة التطبيق)", type: string }
               - name: tags
                 label: "الوسوم"
                 type: object
