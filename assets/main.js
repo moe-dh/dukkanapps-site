@@ -114,3 +114,20 @@ document.querySelectorAll('.btn').forEach(function(b){
   document.querySelectorAll('#navLinks a').forEach(function(a){a.addEventListener('click',function(){set(false)})});
   document.addEventListener('keydown',function(e){if(e.key==='Escape')set(false)});
 })();
+
+/* ---- project brief -> WhatsApp ---- */
+(function(){
+  var f=document.getElementById('brief');if(!f)return;
+  f.addEventListener('submit',function(e){
+    e.preventDefault();
+    var lines=['السلام عليكم، أبي أبدأ مشروع:'];
+    f.querySelectorAll('fieldset.q').forEach(function(fs){
+      var v=[].slice.call(fs.querySelectorAll('input:checked')).map(function(i){return i.value});
+      if(v.length)lines.push('• '+fs.getAttribute('data-label')+' '+v.join('، '));
+    });
+    var d=f.elements.details.value.trim(),n=f.elements.name.value.trim();
+    if(d)lines.push('','التفاصيل: '+d);
+    if(n)lines.push('','الاسم: '+n);
+    window.open('https://wa.me/'+f.getAttribute('data-wa')+'?text='+encodeURIComponent(lines.join('\n')),'_blank','noopener');
+  });
+})();
