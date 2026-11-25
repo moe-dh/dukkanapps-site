@@ -52,7 +52,43 @@ const secHead = (s) => `
       ${s.subtitle ? `<p>${esc(s.subtitle)}</p>` : ''}
     </div>`;
 
-const H = C.header || {}, HE = C.hero || {}, M = C.marquee || {}, S = C.services || {}, W = C.work || {}, P = C.process || {}, F = C.faq || {}, FI = C.final || {}, FO = C.footer || {}, CT = C.contact || {};
+const A = C.apps || {}, H = C.header || {}, HE = C.hero || {}, M = C.marquee || {}, S = C.services || {}, W = C.work || {}, P = C.process || {}, F = C.faq || {}, FI = C.final || {}, FO = C.footer || {}, CT = C.contact || {};
+
+const APPS = list(A.items);
+const fill = (v) => String(v ?? '').replace(/\{\{\s*apps\s*\}\}/g, String(APPS.length));
+const slug = (v) => String(v || '').toLowerCase().replace(/[^a-z0-9-]/g, '');
+const PLAY = '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5.5v13a1 1 0 0 0 1.5.86l11-6.5a1 1 0 0 0 0-1.72l-11-6.5A1 1 0 0 0 8 5.5z"/></svg>';
+const appCard = (a) => {
+  const live = a.status !== 'soon';
+  const s = slug(a.slug);
+  const primary = live && a.store_url
+    ? `<a class="btn btn-primary" href="${esc(a.store_url)}" target="_blank" rel="noopener">ثبّته من سوق زد</a>`
+    : `<a class="btn btn-primary" href="${esc(wa(live ? `أبي أعرف أكثر عن تطبيق ${a.name}` : `أبي أجرب تطبيق ${a.name} أول ما ينزل`))}" target="_blank" rel="noopener">${live ? 'اسألنا عنه' : 'بلّغني أول ما ينزل'}</a>`;
+  return `<article class="app rv">
+        <div class="app-top">
+          ${a.icon ? `<img class="app-icon" src="${img(a.icon)}" alt="" width="56" height="56" loading="lazy">` : `<div class="app-icon">${icon('store')}</div>`}
+          <div class="app-meta">
+            <h3>${esc(a.name)}${a.badge ? ` <span class="new">${esc(a.badge)}</span>` : ''}</h3>
+            <span class="app-cat">${esc(a.category)}</span>
+          </div>
+          <span class="app-status ${live ? 'is-live' : 'is-soon'}">${live ? 'متاح في سوق زد' : 'قريباً في سوق زد'}</span>
+        </div>
+        <p>${esc(a.tagline)}</p>
+        ${a.price || a.offer ? `<div class="app-price">${a.price ? `<b>${esc(a.price)}</b>` : ''}${a.offer ? `<span>${esc(a.offer)}</span>` : ''}</div>` : ''}
+        <div class="app-actions">
+          ${primary}
+          ${a.video_url ? `<a class="btn btn-line" href="${esc(a.video_url)}" target="_blank" rel="noopener">${PLAY}<span>الفيديو</span></a>` : ''}
+          ${s && list(W.cases).some((c) => slug(c.slug) === s) ? `<a class="app-more" href="#case-${s}">التفاصيل</a>` : ''}
+        </div>
+      </article>`;
+};
+const ld = {
+  '@context': 'https://schema.org',
+  '@graph': [
+    { '@type': 'Organization', name: H.brand || 'دكّان آبس', url: 'https://dukkanapps.com', email: CT.email || undefined, telephone: WA ? '+' + WA : undefined },
+    ...APPS.map((a) => ({ '@type': 'SoftwareApplication', name: a.name, description: a.tagline, image: a.icon || undefined, applicationCategory: 'BusinessApplication', operatingSystem: 'Web', url: a.store_url || undefined, publisher: { '@type': 'Organization', name: H.brand || 'دكّان آبس' } }))
+  ]
+};
 
 const introHtml = introMode === 'off' ? '' : `
 <div class="intro" id="intro" aria-hidden="true">
@@ -88,6 +124,7 @@ const html = `<!doctype html>
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=JetBrains+Mono:wght@500&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="/assets/style.css">
+<script type="application/ld+json">${JSON.stringify(ld).replace(/</g, '\\u003c')}</script>
 <style>:root{--amber:${accent};--amber-ink:${safeColor(T.accent_text, '#1a1204')};--green:${safeColor(T.secondary, '#3ccf8e')};--bg:${safeColor(T.background, '#0a0c0b')};--card:${safeColor(T.card, '#131716')};--text:${safeColor(T.text, '#eef1ee')};--muted:${safeColor(T.muted, '#9aa49f')}}</style>
 </head>
 <body class="${introMode === 'off' ? '' : 'locked'}" data-intro="${introMode}" data-motion="${motion ? 'on' : 'off'}">
@@ -100,8 +137,11 @@ ${introHtml}
 <div class="nav-shell">
   <nav class="nav">
     <a href="#" class="logo" aria-label="${esc(H.brand)}">${LOGO(accent, safeColor(T.background, '#0a0c0b'))}${esc(H.brand)}</a>
-    <div class="links">${list(H.links).map((l) => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('')}</div>
+    <div class="links" id="navLinks">${list(H.links).map((l) => `<a href="${esc(l.href)}">${esc(l.label)}</a>`).join('')}</div>
+    <div class="nav-end">
     ${H.cta_label ? `<a class="btn btn-primary" href="${esc(wa(H.cta_message))}" target="_blank" rel="noopener">${CAL}<span>${esc(H.cta_label)}</span></a>` : ''}
+    ${list(H.links).length ? `<button class="menu-btn" id="menuBtn" type="button" aria-label="القائمة" aria-expanded="false" aria-controls="navLinks"><i></i><i></i><i></i></button>` : ''}
+    </div>
   </nav>
 </div>
 
@@ -116,7 +156,7 @@ ${introHtml}
         ${HE.primary_label ? `<a class="btn btn-primary" href="${esc(wa(HE.primary_message || CT.default_message))}" target="_blank" rel="noopener">${esc(HE.primary_label)}</a>` : ''}
         ${HE.secondary_label ? `<a class="btn btn-line" href="${esc(HE.secondary_href || '#work')}">${esc(HE.secondary_label)} ${ARROW}</a>` : ''}
       </div>
-      ${list(HE.facts).length ? `<div class="facts">${list(HE.facts).map((f) => `<div><b>${esc(f.value)}</b><span>${esc(f.label)}</span></div>`).join('')}</div>` : ''}
+      ${list(HE.facts).length ? `<div class="facts">${list(HE.facts).map((f) => `<div><b>${esc(fill(f.value))}</b><span>${esc(fill(f.label))}</span></div>`).join('')}</div>` : ''}
     </div>
     <div class="stack rv" aria-hidden="true" id="stack">
      <div class="stack-inner" id="stackInner">
@@ -134,6 +174,15 @@ ${M.show !== false ? `<div class="marquee" aria-hidden="true">
   ${list(M.row_two).length ? `<div class="track rev" id="t2">${chips(M.row_two)}</div>` : ''}
 </div>` : ''}
 
+${APPS.length ? `<section id="apps" class="apps-sec">
+  <div class="wrap">${secHead(A)}
+    <div class="apps">
+      ${APPS.map(appCard).join('\n      ')}
+    </div>
+    ${A.note ? `<p class="apps-note rv">${esc(A.note)}</p>` : ''}
+  </div>
+</section>` : ''}
+
 <section id="needs">
   <div class="wrap">${secHead(S)}
     <div class="needs">
@@ -149,7 +198,7 @@ ${M.show !== false ? `<div class="marquee" aria-hidden="true">
 
 <section id="work" class="work">
   <div class="wrap">${secHead(W)}
-    ${list(W.cases).map((c, i) => `<article class="case${i % 2 ? ' flip' : ''} rv">
+    ${list(W.cases).map((c, i) => `<article class="case${i % 2 ? ' flip' : ''} rv"${slug(c.slug) ? ` id="case-${slug(c.slug)}"` : ''}>
       <div>
         <div class="case-label">${list(c.tags).map((t) => `<span class="pill">${esc(txt(t))}</span>`).join('')}</div>
         <h3>${esc(c.title)}</h3>
