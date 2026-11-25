@@ -52,7 +52,7 @@ const secHead = (s) => `
       ${s.subtitle ? `<p>${esc(s.subtitle)}</p>` : ''}
     </div>`;
 
-const A = C.apps || {}, H = C.header || {}, HE = C.hero || {}, M = C.marquee || {}, S = C.services || {}, W = C.work || {}, P = C.process || {}, F = C.faq || {}, FI = C.final || {}, FO = C.footer || {}, CT = C.contact || {};
+const WY = C.why || {}, MO = C.models || {}, BR = C.brief || {}, A = C.apps || {}, H = C.header || {}, HE = C.hero || {}, M = C.marquee || {}, S = C.services || {}, W = C.work || {}, P = C.process || {}, F = C.faq || {}, FI = C.final || {}, FO = C.footer || {}, CT = C.contact || {};
 
 const APPS = list(A.items);
 const fill = (v) => String(v ?? '').replace(/\{\{\s*apps\s*\}\}/g, String(APPS.length));
@@ -153,7 +153,7 @@ ${introHtml}
       <h1>${esc(HE.title_before)} ${HE.title_highlight ? `<em>${esc(HE.title_highlight)}</em>` : ''}${esc(HE.title_after)}</h1>
       <p class="lead">${esc(HE.lead)}</p>
       <div class="cta-row">
-        ${HE.primary_label ? `<a class="btn btn-primary" href="${esc(wa(HE.primary_message || CT.default_message))}" target="_blank" rel="noopener">${esc(HE.primary_label)}</a>` : ''}
+        ${HE.primary_label ? (HE.primary_href ? `<a class="btn btn-primary" href="${esc(HE.primary_href)}">${esc(HE.primary_label)}</a>` : `<a class="btn btn-primary" href="${esc(wa(HE.primary_message || CT.default_message))}" target="_blank" rel="noopener">${esc(HE.primary_label)}</a>`) : ''}
         ${HE.secondary_label ? `<a class="btn btn-line" href="${esc(HE.secondary_href || '#work')}">${esc(HE.secondary_label)} ${ARROW}</a>` : ''}
       </div>
       ${list(HE.facts).length ? `<div class="facts">${list(HE.facts).map((f) => `<div><b>${esc(fill(f.value))}</b><span>${esc(fill(f.label))}</span></div>`).join('')}</div>` : ''}
@@ -174,15 +174,6 @@ ${M.show !== false ? `<div class="marquee" aria-hidden="true">
   ${list(M.row_two).length ? `<div class="track rev" id="t2">${chips(M.row_two)}</div>` : ''}
 </div>` : ''}
 
-${APPS.length ? `<section id="apps" class="apps-sec">
-  <div class="wrap">${secHead(A)}
-    <div class="apps">
-      ${APPS.map(appCard).join('\n      ')}
-    </div>
-    ${A.note ? `<p class="apps-note rv">${esc(A.note)}</p>` : ''}
-  </div>
-</section>` : ''}
-
 <section id="needs">
   <div class="wrap">${secHead(S)}
     <div class="needs">
@@ -195,6 +186,15 @@ ${APPS.length ? `<section id="apps" class="apps-sec">
     </div>
   </div>
 </section>
+
+${APPS.length ? `<section id="apps" class="apps-sec">
+  <div class="wrap">${secHead(A)}
+    <div class="apps">
+      ${APPS.map(appCard).join('\n      ')}
+    </div>
+    ${A.note ? `<p class="apps-note rv">${esc(A.note)}</p>` : ''}
+  </div>
+</section>` : ''}
 
 <section id="work" class="work">
   <div class="wrap">${secHead(W)}
@@ -214,6 +214,27 @@ ${APPS.length ? `<section id="apps" class="apps-sec">
   </div>
 </section>
 
+${list(WY.items).length ? `<section id="why">
+  <div class="wrap">${secHead(WY)}
+    <div class="why">
+      ${list(WY.items).map((it) => `<div class="why-item rv"><div class="ico">${icon(it.icon)}</div><div><h3>${esc(it.title)}</h3><p>${esc(it.text)}</p></div></div>`).join('\n      ')}
+    </div>
+  </div>
+</section>` : ''}
+
+${list(MO.items).length ? `<section id="models" class="models-sec">
+  <div class="wrap">${secHead(MO)}
+    <div class="models">
+      ${list(MO.items).map((m) => `<div class="model rv">
+        <h3>${esc(m.title)}</h3>
+        <p>${esc(m.text)}</p>
+        ${list(m.points).length ? `<ul class="points">${list(m.points).map((x) => `<li>${esc(txt(x))}</li>`).join('')}</ul>` : ''}
+        <a class="go" href="${esc(wa(m.message || m.title))}" target="_blank" rel="noopener">تكلم معنا عنها ${ARROW}</a>
+      </div>`).join('\n      ')}
+    </div>
+  </div>
+</section>` : ''}
+
 <section id="process">
   <div class="wrap">${secHead(P)}
     <div class="steps rv">
@@ -221,6 +242,30 @@ ${APPS.length ? `<section id="apps" class="apps-sec">
     </div>
   </div>
 </section>
+
+${list(BR.questions).length ? `<section id="start" class="brief-sec">
+  <div class="wrap">
+    <form class="brief rv" id="brief" data-wa="${esc(WA)}" novalidate>
+      <div class="brief-head">
+        ${BR.kicker ? `<span class="kicker mono">${esc(BR.kicker)}</span>` : ''}
+        <h2>${esc(BR.title)}</h2>
+        ${BR.subtitle ? `<p>${esc(BR.subtitle)}</p>` : ''}
+      </div>
+      ${list(BR.questions).map((q, qi) => `<fieldset class="q" data-label="${esc(q.label)}">
+        <legend>${esc(q.label)}${q.multi ? ' <small>(تقدر تختار أكثر من وحدة)</small>' : ''}</legend>
+        <div class="opts">${list(q.options).map((o) => `<label class="opt"><input type="${q.multi ? 'checkbox' : 'radio'}" name="q${qi}" value="${esc(txt(o))}"><span>${esc(txt(o))}</span></label>`).join('')}</div>
+      </fieldset>`).join('\n      ')}
+      <div class="brief-fields">
+        <label class="field field-wide"><span>${esc(BR.details_label)}</span><textarea name="details" rows="3" maxlength="800" placeholder="${esc(BR.details_placeholder)}"></textarea></label>
+        <label class="field"><span>${esc(BR.name_label)}</span><input name="name" type="text" maxlength="60" autocomplete="name"></label>
+      </div>
+      <div class="brief-foot">
+        <button class="btn btn-primary" type="submit">${WA_ICON} ${esc(BR.button || 'أرسل واتساب')}</button>
+        ${BR.hint ? `<small>${esc(BR.hint)}</small>` : ''}
+      </div>
+    </form>
+  </div>
+</section>` : ''}
 
 <section id="faq">
   <div class="wrap faq">

@@ -86,6 +86,7 @@ content:
           - { name: title_after, label: "العنوان: الجزء الأخير", type: string }
           - { name: lead, label: "الوصف تحت العنوان", type: text }
           - { name: primary_label, label: "الزر الرئيسي: النص", type: string }
+          - { name: primary_href, label: "الزر الرئيسي: رابط داخل الصفحة (مثال #start). اتركه فاضي عشان يفتح واتساب", type: string }
           - { name: primary_message, label: "الزر الرئيسي: رسالة الواتساب", type: string }
           - { name: secondary_label, label: "الزر الثاني: النص", type: string }
           - { name: secondary_href, label: "الزر الثاني: الرابط", type: string }
@@ -223,6 +224,62 @@ content:
               - { name: link_label, label: "نص زر (اختياري)", type: string }
               - { name: link_url, label: "رابط الزر (اختياري)", type: string }
 
+      # ───────── ليش نحن ─────────
+      - name: why
+        label: "⭐ ليش تشتغل معنا"
+        type: object
+        fields:
+          - { name: kicker, label: "الكلمة الصغيرة فوق العنوان", type: string }
+          - { name: title, label: "العنوان", type: string }
+          - { name: subtitle, label: "الوصف", type: text }
+          - name: items
+            label: "المميزات"
+            type: object
+            list: true
+            fields:
+              - name: icon
+                label: "الأيقونة"
+                type: select
+                options:
+                  values:
+                    - { value: store, label: "متجر" }
+                    - { value: chart, label: "تقارير" }
+                    - { value: monitor, label: "شاشة/موقع" }
+                    - { value: phone, label: "جوال" }
+                    - { value: code, label: "كود" }
+                    - { value: palette, label: "تصميم/ثيم" }
+                    - { value: cart, label: "سلة شراء" }
+                    - { value: rocket, label: "صاروخ" }
+                    - { value: bolt, label: "سرعة" }
+                    - { value: shield, label: "حماية" }
+                    - { value: barcode, label: "باركود" }
+                    - { value: ruler, label: "مسطرة/مقاسات" }
+              - { name: title, label: "العنوان", type: string }
+              - { name: text, label: "الوصف", type: text }
+
+      # ───────── طرق التعاون ─────────
+      - name: models
+        label: "🤝 طرق التعاون"
+        type: object
+        fields:
+          - { name: kicker, label: "الكلمة الصغيرة فوق العنوان", type: string }
+          - { name: title, label: "العنوان", type: string }
+          - { name: subtitle, label: "الوصف", type: text }
+          - name: items
+            label: "الطرق"
+            type: object
+            list: true
+            fields:
+              - { name: title, label: "العنوان", type: string }
+              - { name: text, label: "الوصف", type: text }
+              - name: points
+                label: "النقاط"
+                type: object
+                list: true
+                fields:
+                  - { name: text, label: "النقطة", type: string }
+              - { name: message, label: "رسالة الواتساب", type: string }
+
       # ───────── طريقة الشغل ─────────
       - name: process
         label: "🪜 طريقة الشغل"
@@ -238,6 +295,33 @@ content:
             fields:
               - { name: title, label: "العنوان", type: string }
               - { name: text, label: "الوصف", type: text }
+
+      # ───────── نموذج ابدأ مشروعك ─────────
+      - name: brief
+        label: "📝 نموذج «ابدأ مشروعك» (يرسل واتساب)"
+        type: object
+        fields:
+          - { name: kicker, label: "الكلمة الصغيرة فوق العنوان", type: string }
+          - { name: title, label: "العنوان", type: string }
+          - { name: subtitle, label: "الوصف", type: text }
+          - name: questions
+            label: "الأسئلة"
+            type: object
+            list: true
+            fields:
+              - { name: label, label: "السؤال", type: string }
+              - { name: multi, label: "يقدر يختار أكثر من خيار", type: boolean }
+              - name: options
+                label: "الخيارات"
+                type: object
+                list: true
+                fields:
+                  - { name: text, label: "الخيار", type: string }
+          - { name: details_label, label: "عنوان خانة التفاصيل", type: string }
+          - { name: details_placeholder, label: "مثال داخل خانة التفاصيل", type: string }
+          - { name: name_label, label: "عنوان خانة الاسم", type: string }
+          - { name: button, label: "نص الزر", type: string }
+          - { name: hint, label: "ملاحظة جنب الزر", type: string }
 
       # ───────── الأسئلة ─────────
       - name: faq
